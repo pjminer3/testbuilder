@@ -181,6 +181,20 @@ describe('Discover', function() {
 
 describe('Maestro', function() {
   // Write full test coverage for the Maestro card
+  // Maestro always has a prefix of 5018, 5020, 5038, or 6304, and a length of 12-19
+  var expect = chai.expect;
+
+  let prefixArr = ['5018', '5020', '5038', '6304'];
+  let suffixArr = ['12345678', '123456789', '1234567890', '12345678901', '123456789012', '1234567890123', '12345678901234', '123456789012345']
+
+  prefixArr.forEach((prefix) => {
+    suffixArr.forEach((suffix) => {
+      let creditCard = prefix + suffix
+      it(`[${creditCard}] has a prefix of ${prefix} and a length of ${creditCard.length}`, function() {
+        expect(detectNetwork(creditCard)).to.equal('Maestro');
+      });
+    });
+  });
 });
 
 describe('should support China UnionPay')
