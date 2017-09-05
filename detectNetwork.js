@@ -14,26 +14,25 @@ var detectNetwork = function(cardNumber) {
   // Once you've read this, go ahead and try to implement this function, then return to the console.
   
   // DINER'S CLUB
-  let dinersClubArr = cardNumber.match(/3[89]\d{12}/);
+  let dinersClubArr = cardNumber.match(/^3[89]\d{12}$/);
   if (dinersClubArr) { return 'Diner\'s Club'; }
 
   // AMERICAN EXPRESS
-  let americanExpressArr = cardNumber.match(/3[47]\d{13}/);
+  let americanExpressArr = cardNumber.match(/^3[47]\d{13}$/);
   if (americanExpressArr) { return 'American Express'; }
 
+  // VISA
+  let visaArr = cardNumber.match(/^4\d{12}$/) || cardNumber.match(/^4\d{15}$/) || cardNumber.match(/^4\d{18}$/);
+  if (visaArr) { return 'Visa'; }
 
-  // NEED TO LEARN MORE REGEX BEFORE MOVING FORWARD
-  // NEED TO LEARN HOW TO ENSURE THERE'S NO CHARS BEFORE IT, OR AFTER IT, ETC
+  // MASTERCARD
+  let masterCardArr = cardNumber.match(/^5[12345]\d{14}$/);
+  if (masterCardArr) { return 'MasterCard'; }
 
-  // // VISA
-  // let visaArr = cardNumber.match(/4\d{12}/) || cardNumber.match(/4\d{15}/) || cardNumber.match(/4\d{18}/);
-  // if (visaArr) { return 'Visa'; }
-
-  // // MASTERCARD
-  // let masterCardArr = cardNumber.match(/5[12345]\d{14}/);
-  // if (masterCardArr) { return 'MasterCard'; }
-
-
+  // DISCOVER
+  // Discover always has a prefix of 6011, 644-649, or 65, and a length of 16 or 19
+  let discoverArr = cardNumber.match(/^6011\d{12}$/) || cardNumber.match(/^6011\d{15}$/) || cardNumber.match(/^64[4-9]\d{13}$/) || cardNumber.match(/^64[4-9]\d{16}$/) || cardNumber.match(/^65\d{14}$/) || cardNumber.match(/^65\d{17}$/);
+  if (discoverArr) { return 'Discover'; }
 };
 
 
