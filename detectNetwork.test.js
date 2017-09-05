@@ -197,5 +197,107 @@ describe('Maestro', function() {
   });
 });
 
-describe('should support China UnionPay')
+describe('should support China UnionPay', function() {
+  // China UnionPay always has a prefix of 622126-622925, 624-626, or 6282-6288 and a length of 16-19.
+  var expect = chai.expect;
+
+  // Create an array of all the possible prefixes
+  let firstPrefix = [];
+  for (let i = 622126; i < 622926; i++) {
+    firstPrefix.push(i.toString());
+  }
+  let secondPrefix = ['624', '625', '626'];
+  let thirdPrefix = ['6282', '6283', '6284', '6285', '6286', '6287', '6288'];
+  let prefix = firstPrefix.concat(secondPrefix, thirdPrefix);
+
+  // Chai test for each prefix (customized by the prefix length)
+  prefix.forEach((prefix) => {
+    if (prefix.length === 3) {
+      let card1 = prefix + '4567890123456'; // 16 length
+      let card2 = prefix + '45678901234567'; // 17 length
+      let card3 = prefix + '456789012345678'; // 18 length
+      let card4 = prefix + '4567890123456789'; // 19 length
+
+      // Test card prefix at length 16
+      it(`[${card1}] has a prefix of ${prefix} and a length of ${card1.length}`, function() {
+        expect(detectNetwork(card1)).to.equal('China UnionPay');
+      });
+
+      // Test card prefix at length 17
+      it(`[${card2}] has a prefix of ${prefix} and a length of ${card2.length}`, function() {
+        expect(detectNetwork(card2)).to.equal('China UnionPay');
+      });
+
+      // Test card prefix at length 16
+      it(`[${card3}] has a prefix of ${prefix} and a length of ${card3.length}`, function() {
+        expect(detectNetwork(card3)).to.equal('China UnionPay');
+      });
+
+      // Test card prefix at length 19
+      it(`[${card4}] has a prefix of ${prefix} and a length of ${card4.length}`, function() {
+        expect(detectNetwork(card4)).to.equal('China UnionPay');
+      });
+    } else if (prefix.length === 4) {
+      let card1 = prefix + '567890123456'; // 16 length
+      let card2 = prefix + '5678901234567'; // 17 length
+      let card3 = prefix + '56789012345678'; // 18 length
+      let card4 = prefix + '567890123456789'; // 19 length
+
+      // Test card prefix at length 16
+      it(`[${card1}] has a prefix of ${prefix} and a length of ${card1.length}`, function() {
+        expect(detectNetwork(card1)).to.equal('China UnionPay');
+      });
+
+      // Test card prefix at length 17
+      it(`[${card2}] has a prefix of ${prefix} and a length of ${card2.length}`, function() {
+        expect(detectNetwork(card2)).to.equal('China UnionPay');
+      });
+
+      // Test card prefix at length 16
+      it(`[${card3}] has a prefix of ${prefix} and a length of ${card3.length}`, function() {
+        expect(detectNetwork(card3)).to.equal('China UnionPay');
+      });
+
+      // Test card prefix at length 19
+      it(`[${card4}] has a prefix of ${prefix} and a length of ${card4.length}`, function() {
+        expect(detectNetwork(card4)).to.equal('China UnionPay');
+      });
+    } else if (prefix.length === 6) {
+      let card1 = prefix + '7890123456'; // 16 length
+      let card2 = prefix + '78901234567'; // 17 length
+      let card3 = prefix + '789012345678'; // 18 length
+      let card4 = prefix + '7890123456789'; // 19 length
+
+      // Test card prefix at length 16
+      it(`[${card1}] has a prefix of ${prefix} and a length of ${card1.length}`, function() {
+        expect(detectNetwork(card1)).to.equal('China UnionPay');
+      });
+
+      // Test card prefix at length 17
+      it(`[${card2}] has a prefix of ${prefix} and a length of ${card2.length}`, function() {
+        expect(detectNetwork(card2)).to.equal('China UnionPay');
+      });
+
+      // Test card prefix at length 16
+      it(`[${card3}] has a prefix of ${prefix} and a length of ${card3.length}`, function() {
+        expect(detectNetwork(card3)).to.equal('China UnionPay');
+      });
+
+      // Test card prefix at length 19
+      it(`[${card4}] has a prefix of ${prefix} and a length of ${card4.length}`, function() {
+        expect(detectNetwork(card4)).to.equal('China UnionPay');
+      });
+    }
+
+    // // Test card prefix at length 16
+    // it(`[${card1}] has a prefix of ${prefix} and a length of ${card1.length}`, function() {
+    //   expect(detectNetwork(card1)).to.equal('China UnionPay');
+    // });
+
+    // // Test card prefix at length 19
+    // it(`[${card2}] has a prefix of ${prefix} and a length of ${card2.length}`, function() {
+    //   expect(detectNetwork(card2)).to.equal('China UnionPay');
+    // });
+  });
+});
 describe('should support Switch')

@@ -38,6 +38,31 @@ var detectNetwork = function(cardNumber) {
   // Maestro always has a prefix of 5018, 5020, 5038, or 6304, and a length of 12-19
   let maestroArr = cardNumber.match(/^5018\d{8,15}$/) || cardNumber.match(/^5020\d{8,15}$/) || cardNumber.match(/^5038\d{8,15}$/) || cardNumber.match(/^6304\d{8,15}$/);
   if (maestroArr) { return 'Maestro'; }
+
+  // CHINA UNIONPAY
+  // China UnionPay always has a prefix of 622126-622925, 624-626, or 6282-6288 and a length of 16-19.
+  
+  
+  let CUPprefix = ['624', '625', '626', '6282', '6283', '6284', '6285', '6286', '6287', '6288'];
+  for (let i = 622126; i < 622926; i++) {
+    CUPprefix.push(i.toString());
+  }
+
+  for (let i = 0; i < CUPprefix.length; i++) {
+    if (cardNumber.substring(0, CUPprefix[i].length) === CUPprefix[i] && (cardNumber.length === 16 || cardNumber.length === 17 || cardNumber.length === 18 || cardNumber.length === 19)) {
+      return 'China UnionPay';
+    }
+  };
+
+
+  // if (prefix.includes(cardNumber.substring(0,4)) || prefix.includes(cardNumber.substring(0,5)) || prefix.includes(cardNumber.substring(0,7))) {
+  //   if (cardNumber.length === 16 || cardNumber.length === 19) {
+  //     return 'China UnionPay';
+  //   }
+  // }
+
+  // SWITCH
+  // Switch always has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759 and a length of 16, 18, or 19."
 };
 
 
