@@ -1,3 +1,22 @@
+function cardTest(bank) {
+  // Need to set a chai test environment
+  var expect = chai.expect;
+
+  return function(prefix) {
+    return function(card) {
+      it(`[${card}] has a prefix of ${prefix} and a length of ${card.length}`, function() {
+        expect(detectNetwork(card)).to.equal(bank);
+      });
+    }
+  }
+}
+
+// Create China UnionPay test template
+let CUPtest = cardTest('China UnionPay');
+// Create Switch test template
+let switchTest = cardTest('Switch');
+
+
 /*
  * You'll eventually be given instructions how to use this file
  * If you want to use it before then, you'll have to figure it out yourself
@@ -209,81 +228,45 @@ describe('should support China UnionPay', function() {
 
   // Chai test for each prefix (customized by the prefix length)
   for(let i = 0; i < prefix.length; i++) {
+
+    // Create a new test for each new prefix
+    let test = CUPtest(prefix[i]);
+
     if (prefix[i].length === 3) { // Tests if prefix was only length 3
       let card1 = prefix[i] + '4567890123456'; // 16 length
       let card2 = prefix[i] + '45678901234567'; // 17 length
       let card3 = prefix[i] + '456789012345678'; // 18 length
       let card4 = prefix[i] + '4567890123456789'; // 19 length
       
-      // Test card prefix at length 16
-      it(`[${card1}] has a prefix of ${prefix[i]} and a length of ${card1.length}`, function() {
-        expect(detectNetwork(card1)).to.equal('China UnionPay');
-      });
+      // Test all 4 cards (lengths 16-19) with the same 3 digit prefix
+      test(card1);
+      test(card2);
+      test(card3);
+      test(card4);
 
-      // Test card prefix at length 17
-      it(`[${card2}] has a prefix of ${prefix[i]} and a length of ${card2.length}`, function() {
-        expect(detectNetwork(card2)).to.equal('China UnionPay');
-      });
-
-      // Test card prefix at length 16
-      it(`[${card3}] has a prefix of ${prefix[i]} and a length of ${card3.length}`, function() {
-        expect(detectNetwork(card3)).to.equal('China UnionPay');
-      });
-
-      // Test card prefix at length 19
-      it(`[${card4}] has a prefix of ${prefix[i]} and a length of ${card4.length}`, function() {
-        expect(detectNetwork(card4)).to.equal('China UnionPay');
-      });
     } else if (prefix[i].length === 4) {  // Test if prefix was only length 4
       let card1 = prefix[i] + '567890123456'; // 16 length
       let card2 = prefix[i] + '5678901234567'; // 17 length
       let card3 = prefix[i] + '56789012345678'; // 18 length
       let card4 = prefix[i] + '567890123456789'; // 19 length
 
-      // Test card prefix at length 16
-      it(`[${card1}] has a prefix of ${prefix[i]} and a length of ${card1.length}`, function() {
-        expect(detectNetwork(card1)).to.equal('China UnionPay');
-      });
+      // Test all 4 cards (lengths 16-19) with the same 4 digit prefix
+      test(card1);
+      test(card2);
+      test(card3);
+      test(card4);
 
-      // Test card prefix at length 17
-      it(`[${card2}] has a prefix of ${prefix[i]} and a length of ${card2.length}`, function() {
-        expect(detectNetwork(card2)).to.equal('China UnionPay');
-      });
-
-      // Test card prefix at length 16
-      it(`[${card3}] has a prefix of ${prefix[i]} and a length of ${card3.length}`, function() {
-        expect(detectNetwork(card3)).to.equal('China UnionPay');
-      });
-
-      // Test card prefix at length 19
-      it(`[${card4}] has a prefix of ${prefix[i]} and a length of ${card4.length}`, function() {
-        expect(detectNetwork(card4)).to.equal('China UnionPay');
-      });
     } else if (prefix[i].length === 6) { // Test if prefix was length 6
       let card1 = prefix[i] + '7890123456'; // 16 length
       let card2 = prefix[i] + '78901234567'; // 17 length
       let card3 = prefix[i] + '789012345678'; // 18 length
       let card4 = prefix[i] + '7890123456789'; // 19 length
 
-      // Test card prefix at length 16
-      it(`[${card1}] has a prefix of ${prefix[i]} and a length of ${card1.length}`, function() {
-        expect(detectNetwork(card1)).to.equal('China UnionPay');
-      });
-
-      // Test card prefix at length 17
-      it(`[${card2}] has a prefix of ${prefix[i]} and a length of ${card2.length}`, function() {
-        expect(detectNetwork(card2)).to.equal('China UnionPay');
-      });
-
-      // Test card prefix at length 16
-      it(`[${card3}] has a prefix of ${prefix[i]} and a length of ${card3.length}`, function() {
-        expect(detectNetwork(card3)).to.equal('China UnionPay');
-      });
-
-      // Test card prefix at length 19
-      it(`[${card4}] has a prefix of ${prefix[i]} and a length of ${card4.length}`, function() {
-        expect(detectNetwork(card4)).to.equal('China UnionPay');
-      });
+      // Test all 4 cards (lengths 16-19) with the same 6 digit prefix
+      test(card1);
+      test(card2);
+      test(card3);
+      test(card4);
     }
   }
 });
@@ -296,44 +279,29 @@ describe('should support Switch', function() {
   let switchPrefix = ['4903', '4905', '4911', '4936', '564182', '633110', '6333', '6759'];
 
   switchPrefix.forEach((prefix) => {
+
+    // Create new test for each new prefix
+    let test = switchTest(prefix);
+
     if (prefix.length === 4) { // Tests for prefix length of 4
       let card16 = prefix + '567890123456';
       let card18 = prefix + '56789012345678';
       let card19 = prefix + '567890123456789';
 
-      // Test for total card number length of 16
-      it(`[${card16}] has a prefix ${prefix} and a length of ${card16.length}`, function() {
-        expect(detectNetwork(card16)).to.equal('Switch');
-      });
+      // Test all 3 lengths of card with the same 4 digit prefix
+      test(card16);
+      test(card18);
+      test(card19);
 
-      // Test for total card number length of 18
-      it(`[${card18}] has a prefix ${prefix} and a length of ${card18.length}`, function() {
-        expect(detectNetwork(card18)).to.equal('Switch');
-      });
-
-       // Test for total card number length of 19
-       it(`[${card19}] has a prefix ${prefix} and a length of ${card19.length}`, function() {
-        expect(detectNetwork(card19)).to.equal('Switch');
-      });
     } else if (prefix.length === 6) {
       let card16 = prefix + '7890123456';
       let card18 = prefix + '789012345678';
       let card19 = prefix + '7890123456789';
 
-      // Test for total card number length of 16
-      it(`[${card16}] has a prefix ${prefix} and a length of ${card16.length}`, function() {
-        expect(detectNetwork(card16)).to.equal('Switch');
-      });
-
-      // Test for total card number length of 18
-      it(`[${card18}] has a prefix ${prefix} and a length of ${card18.length}`, function() {
-        expect(detectNetwork(card18)).to.equal('Switch');
-      });
-
-       // Test for total card number length of 19
-       it(`[${card19}] has a prefix ${prefix} and a length of ${card19.length}`, function() {
-        expect(detectNetwork(card19)).to.equal('Switch');
-      });
+      // Test all 3 lenghts of card with the same 6 digit prefix
+      test(card16);
+      test(card18);
+      test(card19);
     }
   });
 });
